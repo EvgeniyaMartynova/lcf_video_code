@@ -7,11 +7,6 @@ library(sp)
 source("utils.R")
 source("settings.R")
 
-# Function to linearly interpolate between two sets of points
-lerp <- function(start, end, t) {
-  start + t * (end - start)
-}
-
 reorder_coords <- function(original_coords, generated_coords) {
   ordered_coords <- matrix(nrow=nrow(generated_coords), ncol=ncol(generated_coords))
   remaining_coords <- as.matrix(generated_coords)
@@ -27,20 +22,7 @@ reorder_coords <- function(original_coords, generated_coords) {
   return(ordered_coords)
 }
 
-# Easing function for ease-in and ease-out
-ease_in_out <- function(t) {
-  if (t < 0.5) {
-    4 * t^3
-  } else {
-    (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
-  }
-}
-
-# Function to interpolate between two sets of points with easing
-ease_lerp <- function(start, end, t) {
-  eased_t <- ease_in_out(t)
-  start + eased_t * (end - start)
-}
+b_cell_color <- "#800066"
 
 data_folder <- "data"
 output_folder <- "img"
@@ -85,7 +67,7 @@ for (i in 1:50) {
 
   plot(boundary, lwd = 5)
   coords <- ease_lerp(real_coords, random_coords, t)
-  points(Y ~ X, data=coords, col="#800066", pch=19, cex=3)
+  points(Y ~ X, data=coords, col=b_cell_color, pch=19, cex=3)
   dev.off()
 }
 
@@ -100,7 +82,7 @@ for (i in 1:50) {
 
   plot(boundary, lwd = 5)
   coords <- ease_lerp(random_coords, md_coords, t)
-  points(Y ~ X, data=coords, col="#800066", pch=19, cex=3)
+  points(Y ~ X, data=coords, col=b_cell_color, pch=19, cex=3)
   dev.off()
 }
 
@@ -115,6 +97,6 @@ for (i in 1:50) {
 
   plot(boundary, lwd = 5)
   coords <- ease_lerp(real_coords, mc_coords, t)
-  points(Y ~ X, data=coords, col="#800066", pch=19, cex=3)
+  points(Y ~ X, data=coords, col=b_cell_color, pch=19, cex=3)
   dev.off()
 }
